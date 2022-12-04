@@ -25,7 +25,7 @@ public class Slot {
     
     
     public Slot() {
-        this.buffer = new LinkedList();
+        this.buffer = new LinkedList<Document>();
     }
 
     
@@ -54,13 +54,6 @@ public class Slot {
 
 
     
-    /**
-     * Creará un slot que conectará dos Task entre si
-     * @param t1
-     * @param t2 
-     */
-    public static void connect(Task t1, Task t2) {
-        
-    }
+
     
 }

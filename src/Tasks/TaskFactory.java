@@ -16,6 +16,7 @@ public class TaskFactory {
 
     public TaskFactory getInstance() { return factory; }
 
+    
     public Task createTask(int type) {
 
         switch (type) {
