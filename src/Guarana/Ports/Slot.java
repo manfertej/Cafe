@@ -1,7 +1,7 @@
 
-package Ports;
+package Guarana.Ports;
 
-import Tasks.Task;
+import Guarana.Tasks.Task;
 import java.util.LinkedList;
 import java.util.Queue;
 

@@ -1,7 +1,7 @@
 
-package Tasks;
+package Guarana.Tasks;
 
-import Ports.Slot;
+import Guarana.Ports.Slot;
 
 /**
  * De momento esto es solo para Agrupar las Tasks y para gestionar el ensamblaje de Task-Slot
