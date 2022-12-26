@@ -1,0 +1,6 @@
+{
+    "splitter" : {
+        "id" : "order_id",
+        "list" : "//drinks/*"
+    }
+}

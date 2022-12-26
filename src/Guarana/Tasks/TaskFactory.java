@@ -1,6 +1,10 @@
 
 package Guarana.Tasks;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+
 
 /**
  * Usaremos el Patron Factory para la creacion de Tasks.
@@ -17,19 +21,22 @@ public class TaskFactory {
     public TaskFactory getInstance() { return factory; }
 
     
-    public Task createTask(int type) {
+    public Task createTask(Tasks type, JSONObject json) {
 
+        
+        
         switch (type) {
             
-            case 0:
-            break;
+            case SPLITTER:
+                
+                return new Splitter(json);
+
                 
         
 
 
             default: return null;
         }
-        return null;
     }
     
 }
