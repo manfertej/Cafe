@@ -2,28 +2,22 @@
 package Guarana.util;
 
 
+import Guarana.Ports.Input;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
 import Guarana.Ports.Slot;
 import Guarana.Tasks.Task;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.StringWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.TransformerFactoryConfigurationError;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import org.json.JSONObject;
@@ -51,6 +45,17 @@ public class Toolbox {
 
     
     
+    
+    public static void connect(Input inp, Task t) {
+        
+        Slot sAux = new Slot();
+        inp.setInput(sAux);
+        t.setInput(sAux);
+    }
+    
+    
+    
+    
     public static Document createDocument(String dir) throws Exception{
         File inputFile = new File(dir);
 
@@ -60,6 +65,7 @@ public class Toolbox {
         
         return doc;
     }
+    
     
     
     
@@ -81,6 +87,8 @@ public class Toolbox {
     }
 
 
+    
+    
     public static String toString(Node node) throws Exception {
         StringWriter writer = new StringWriter();
         Transformer transformer = TransformerFactory.newInstance().newTransformer();
@@ -90,6 +98,7 @@ public class Toolbox {
     }
 
 
+    
     
     /**
      * Crea un JSONObject en base al objeto cuya ruta se pasa por parametro.
@@ -103,8 +112,6 @@ public class Toolbox {
         String content = new String(Files.readAllBytes(Paths.get(path)));
         return new JSONObject(content);
     }
-
-
 
 }
 

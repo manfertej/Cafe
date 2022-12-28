@@ -9,5 +9,5 @@ package Guarana.Tasks;
  * @author alfonso
  */
 public enum Tasks {
-    SPLITTER
+    SPLITTER, DISTRIBUTOR, REPLICATOR
 }

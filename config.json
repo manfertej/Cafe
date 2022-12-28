@@ -2,5 +2,24 @@
     "splitter" : {
         "id" : "order_id",
         "list" : "//drinks/*"
+    },
+
+    "distributor" : {
+        "nInputs" : 2,
+        "routers" : ["hot", "cold"],
+        "discriminant" : "type"
+    },
+
+    "replicator1" : {
+        "nOutputs" : 2
+    },
+
+    "merger" : {
+        "nInputs" : 2
+    },
+
+    "translator" : {
+        "path" : "traductor.xsl"
     }
+
 }

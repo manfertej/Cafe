@@ -14,6 +14,7 @@ public abstract class Task {
     
     public abstract void setInput(Slot s);
     public abstract void setOutput(Slot s);
+    public abstract void run();
     
     /* No se si voy a necesitar esto. 
     public abstract Slot getInput(Slot s);

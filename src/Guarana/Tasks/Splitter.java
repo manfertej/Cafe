@@ -5,7 +5,6 @@ package Guarana.Tasks;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathFactory;
 
 import org.w3c.dom.*;
@@ -17,9 +16,12 @@ import org.json.JSONObject;
 
 
 /**
- * La clase debe recibir un JSON con dos parametros de configuracion.
- * - id: 
+ * Divide el mensaje en tantos mensajes como la lista que contiene.
  * 
+ * La clase debe recibir un JSON con dos parametros de configuracion.
+ * - id: Nombre de la etiqueta de identificacion que se mantendra en todos los
+ *  documentos. Si no existe no la colocara.
+ * - list: Expresion XPath que determina como encontrar la lista dentro del XML.
  * 
  * @author alfonso
  */
@@ -29,20 +31,17 @@ public class Splitter extends Task{
 
     private Slot input;
     private Slot output;
-    
-    //Objeto JSON de configuracion.
-    private JSONObject json;
-    
+   
     //Expresion XPath que determina el id que se va a mantener. 
     private String idExpr;
     
-    private XPath xpath;
     //Expresion XPath para encontrar la lista de elementos.
     private String xpathExpr;
 
 
     /*Metodos
     **************************************************************************/
+    
     /**
      * Constructor de la clase.
      * @param json
@@ -69,7 +68,7 @@ public class Splitter extends Task{
 
     
     public void run() {
-
+        
         Document doc = this.input.read();
         XPath xpath = XPathFactory.newInstance().newXPath();
         
@@ -83,17 +82,17 @@ public class Splitter extends Task{
             NodeList nodeList = (NodeList) xpath.compile(this.xpathExpr).evaluate(doc, XPathConstants.NODESET); 
             
 
-            //Por cada nodo de la lista creamos un documento que 
-            //contenga el nodo id y el nodo bebida.
+
             Document docAux;
             Node nAux;
             for(int i=0; i<nodeList.getLength(); i++) {
 
+                //Creamos el documento, le damos un root con el mismo nombre que
+                //el original
                 docAux = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
-                nAux = nodeList.item(i);
-                
-                Element root = docAux.createElement("root");
+                Element root = docAux.createElement(doc.getDocumentElement().getNodeName());
                 docAux.appendChild(root);
+                nAux = nodeList.item(i);
                 
                 Node idAux;
                 if(id != null){
@@ -105,28 +104,18 @@ public class Splitter extends Task{
                 docAux.getDocumentElement().appendChild(itemAux);
                 
                 System.out.println(Toolbox.toString(docAux));
+                this.output.write(docAux);
             }
-            
-
-        } catch (Exception ex) {
+        } 
+        catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
-    
-    
     }
 
 
 
-
-
-
-
-
-
-
-
-
-
+// Main para pruebas ***********************************************************
+/*
     public static void main(String[] args) throws Exception {
         
         JSONObject json = Toolbox.jsonFromFile("config.json");
@@ -138,9 +127,6 @@ public class Splitter extends Task{
         
         s.write(doc);
         splitter.run();
-        
-
-
     }
-
+*/
 }
