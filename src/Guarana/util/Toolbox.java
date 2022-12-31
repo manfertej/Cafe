@@ -70,7 +70,13 @@ public class Toolbox {
     
     
     
-    
+    /**
+     * Crea un documento en base a un fichero existente.
+     * 
+     * @param dir - La direccion del fichero.
+     * @return
+     * @throws Exception 
+     */
     public static Document createDocument(String dir) throws Exception{
         File inputFile = new File(dir);
 
@@ -143,6 +149,7 @@ public class Toolbox {
     
 
     public static Document newDocument() throws Exception {
+        
         return DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
     }
     

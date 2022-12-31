@@ -31,5 +31,14 @@
         "id" : "order_id",
         "list" : "drinks",
         "items" : "drink"
+    },
+
+    "translatorFrias" : {
+        "path" : "traductorFrias.xsl"
+    },
+
+    "translatorCalientes" : {
+        "path" : "traductorCalientes.xsl"
     }
+
 }

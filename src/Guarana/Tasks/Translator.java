@@ -3,12 +3,13 @@ package Guarana.Tasks;
 
 import Guarana.Ports.Slot;
 import Guarana.util.Toolbox;
-import java.io.File;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.stream.StreamSource;
+import javax.xml.transform.dom.DOMResult;
+import javax.xml.transform.dom.DOMSource;
 import org.json.JSONObject;
 import org.w3c.dom.Document;
 
@@ -21,19 +22,16 @@ public class Translator extends Task{
     private Slot output;
 
     //Fichero XSL que determina como se hará la traduccion.
-    private Document xsl;
+    private String xslPath;
 
     
     
     public Translator(JSONObject json) {
         
         try {
-            this.xsl = Toolbox.createDocument(json.getString("path"));
+            this.xslPath = json.getString("path");
         } catch (Exception ex) {
-            System.out.println("-----------------------------------");
             System.out.println("Fallo al leer el xsl de traduccion");
-            System.out.println("Mensaje de error:" + ex.getMessage());
-            System.out.println("-----------------------------------");
         }
         
     }
@@ -50,10 +48,54 @@ public class Translator extends Task{
     
     
     @Override
-    public void run() {
+    public void run() throws Exception {
 
-        TransformerFactory factory = TransformerFactory.newInstance();
-        Source xslt = new StreamSource(new File("transform.xsl"));
+        Document doc = this.input.read();
+        
+        //Por algun motivo, si no lo hago asi da un error.
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        dbf.setNamespaceAware(true);
+        DocumentBuilder db = dbf.newDocumentBuilder();
+        Document xsl = db.parse(this.xslPath);
+
+        
+        //System.out.println(Toolbox.toString(xsl));
+        
+        Source xmlSource = new DOMSource(doc);
+        Source xsltSource = new DOMSource(xsl);
+        DOMResult result = new DOMResult();
+
+
+        TransformerFactory transFact = TransformerFactory.newInstance();
+        Transformer trans = transFact.newTransformer(xsltSource);
+
+        trans.transform(xmlSource, result);
+
+        Document resultDoc = (Document) result.getNode();
+        
+        System.out.println(Toolbox.toString(resultDoc));
+        //this.output.write(resultDoc);
     }
 
+    
+/*    
+    public static void main(String[] args) throws Exception {
+        
+        JSONObject json = Toolbox.jsonFromFile("config.json");
+        Slot s = new Slot();
+        Translator splitter = new Translator(json.getJSONObject("translatorFrias"));
+        splitter.setInput(s);
+        
+        Document doc = Toolbox.createDocument("testCorrelator1.xml");
+        
+        s.write(doc);
+        splitter.run();
+    }
+  */  
+    
+    
+    
+    
+    
+    
 }

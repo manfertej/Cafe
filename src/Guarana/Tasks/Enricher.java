@@ -57,10 +57,4 @@ public class Enricher extends Task{
         this.output.write(docMain);
     }
 
-
-    public static void main(String[] args) {
-        
-    }
-
-    
 }
