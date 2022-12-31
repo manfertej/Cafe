@@ -52,8 +52,7 @@ public class Slot {
      */
     public int nMessages() { return this.buffer.size(); }
 
-
-    
+    public boolean empty() { return this.nMessages() == 0; }
 
     
 }

@@ -74,7 +74,7 @@ public class Replicator extends Task{
     }
 
 
-
+/*
     public static void main(String[] args) throws Exception {
         JSONObject json = Toolbox.jsonFromFile("config.json");
         
@@ -93,7 +93,7 @@ public class Replicator extends Task{
         
         replicator.run();
     }
-
+*/
 
 
 

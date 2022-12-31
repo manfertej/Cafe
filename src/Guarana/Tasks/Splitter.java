@@ -2,7 +2,6 @@
 package Guarana.Tasks;
 
 
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathFactory;
@@ -21,7 +20,7 @@ import org.json.JSONObject;
  * La clase debe recibir un JSON con dos parametros de configuracion.
  * - id: Nombre de la etiqueta de identificacion que se mantendra en todos los
  *  documentos. Si no existe no la colocara.
- * - list: Expresion XPath que determina como encontrar la lista dentro del XML.
+ * - list: Nombre de la etiqueta que contiene la lista de elementos.
  * 
  * @author alfonso
  */
@@ -67,49 +66,46 @@ public class Splitter extends Task{
 
 
     
-    public void run() {
+    @Override
+    public void run() throws Exception {
         
         Document doc = this.input.read();
         XPath xpath = XPathFactory.newInstance().newXPath();
         
-        try {
+        
             
-            //Nodo con el id de la comanda
-            Node id = null;
-            if (this.idExpr != null) id = doc.getElementsByTagName(idExpr).item(0);
+        //Nodo con el id de la comanda
+        Node id = null;
+        if (this.idExpr != null) id = doc.getElementsByTagName(idExpr).item(0);
+        
+        //Nodo con la lista de bebidas de la comanda.
+        NodeList nodeList = (NodeList) xpath.compile("//" + this.xpathExpr + "/*")
+                .evaluate(doc, XPathConstants.NODESET); 
+
+        Document docAux;
+        Node nAux;
+        for(int i=0; i<nodeList.getLength(); i++) {
+
+            //Creamos el documento, le damos un root con el mismo nombre que
+            //el original
+            docAux = Toolbox.newDocument();
+            Element root = docAux.createElement(doc.getDocumentElement().getNodeName());
+            docAux.appendChild(root);
+            nAux = nodeList.item(i);
             
-            //Nodo con la lista de bebidas de la comanda.
-            NodeList nodeList = (NodeList) xpath.compile(this.xpathExpr).evaluate(doc, XPathConstants.NODESET); 
-            
-
-
-            Document docAux;
-            Node nAux;
-            for(int i=0; i<nodeList.getLength(); i++) {
-
-                //Creamos el documento, le damos un root con el mismo nombre que
-                //el original
-                docAux = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
-                Element root = docAux.createElement(doc.getDocumentElement().getNodeName());
-                docAux.appendChild(root);
-                nAux = nodeList.item(i);
-                
-                Node idAux;
-                if(id != null){
-                    idAux = docAux.importNode(id, true);
-                    docAux.getDocumentElement().appendChild(idAux);
-                }
-                
-                Node itemAux = docAux.importNode(nAux, true);
-                docAux.getDocumentElement().appendChild(itemAux);
-                
-                System.out.println(Toolbox.toString(docAux));
-                this.output.write(docAux);
+            Node idAux;
+            if(id != null){
+                idAux = docAux.importNode(id, true);
+                docAux.getDocumentElement().appendChild(idAux);
             }
-        } 
-        catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            
+            Node itemAux = docAux.importNode(nAux, true);
+            docAux.getDocumentElement().appendChild(itemAux);
+            
+            System.out.println(Toolbox.toString(docAux));
+            this.output.write(docAux);
         }
+        
     }
 
 

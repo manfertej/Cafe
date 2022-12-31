@@ -4,13 +4,12 @@
  */
 package Guarana.Ports;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import javax.swing.JFileChooser;
 import org.w3c.dom.Document;
 
 /**
- *
+ * Te elije el fichero que entra al sistema.
  * @author alfonso
  */
 public class Input {

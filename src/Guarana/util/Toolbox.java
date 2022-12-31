@@ -3,6 +3,7 @@ package Guarana.util;
 
 
 import Guarana.Ports.Input;
+import Guarana.Ports.Output;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
@@ -15,18 +16,24 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathFactory;
 import org.json.JSONObject;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
 
 
 
 /**
- * Esta clase contendrá metodos auxiliares
+ * Esta clase contendrá funciones auxiliares.
  * @author alfonso
  */
 public class Toolbox {
@@ -51,6 +58,14 @@ public class Toolbox {
         Slot sAux = new Slot();
         inp.setInput(sAux);
         t.setInput(sAux);
+    }
+    
+    
+    public static void connect(Task t, Output o) {
+        
+        Slot sAux = new Slot();
+        t.setOutput(sAux);
+        o.setInput(sAux);
     }
     
     
@@ -112,6 +127,25 @@ public class Toolbox {
         String content = new String(Files.readAllBytes(Paths.get(path)));
         return new JSONObject(content);
     }
+    
+    
+    public static String getText(Document doc, String name) throws Exception{
+        
+        XPath xPath = XPathFactory.newInstance().newXPath();
+        
+        NodeList nodeList = (NodeList) xPath.compile("//" + name)
+                        .evaluate(doc, XPathConstants.NODESET);
+        Node n = nodeList.item(0);
+        Element e = (Element) n;
+        
+        return e.getTextContent();
+    }
+    
 
+    public static Document newDocument() throws Exception {
+        return DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
+    }
+    
+    
 }
 

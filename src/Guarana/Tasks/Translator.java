@@ -2,7 +2,10 @@
 package Guarana.Tasks;
 
 import Guarana.Ports.Slot;
+import Guarana.util.Toolbox;
 import java.io.File;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.xml.transform.Source;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamSource;
@@ -18,11 +21,20 @@ public class Translator extends Task{
     private Slot output;
 
     //Fichero XSL que determina como se hará la traduccion.
-    private Document formatter;
+    private Document xsl;
 
     
     
     public Translator(JSONObject json) {
+        
+        try {
+            this.xsl = Toolbox.createDocument(json.getString("path"));
+        } catch (Exception ex) {
+            System.out.println("-----------------------------------");
+            System.out.println("Fallo al leer el xsl de traduccion");
+            System.out.println("Mensaje de error:" + ex.getMessage());
+            System.out.println("-----------------------------------");
+        }
         
     }
     

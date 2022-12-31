@@ -5,7 +5,8 @@ import Guarana.Ports.Slot;
 import org.json.JSONObject;
 
 /**
- * De momento esto es solo para Agrupar las Tasks y para gestionar el ensamblaje de Task-Slot
+ * De momento esto es solo para Agrupar las Tasks en una clase comun.
+ * 
  * @author alfonso
  */
 public abstract class Task {
@@ -14,7 +15,8 @@ public abstract class Task {
     
     public abstract void setInput(Slot s);
     public abstract void setOutput(Slot s);
-    public abstract void run();
+    
+    public abstract void run() throws Exception;
     
     /* No se si voy a necesitar esto. 
     public abstract Slot getInput(Slot s);

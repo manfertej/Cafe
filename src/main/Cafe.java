@@ -23,8 +23,6 @@ public class Cafe {
         
         Splitter splitter = new Splitter(json.getJSONObject("splitter"));
         Distributor distributor = new Distributor(json.getJSONObject("distributor"));
-        
-        //Comparten la misma configuracion
         Replicator replicator1 = new Replicator(json.getJSONObject("replicator1"));
         Replicator replicator2 = new Replicator(json.getJSONObject("replicator1"));
         
@@ -38,6 +36,7 @@ public class Cafe {
         Toolbox.connect(splitter, distributor);
         Toolbox.connect(distributor, replicator1);
         Toolbox.connect(distributor, replicator2);
+        
         
         
         

@@ -1,7 +1,7 @@
 {
     "splitter" : {
         "id" : "order_id",
-        "list" : "//drinks/*"
+        "list" : "drinks"
     },
 
     "distributor" : {
@@ -20,6 +20,16 @@
 
     "translator" : {
         "path" : "traductor.xsl"
-    }
+    },
 
+    "correlator" : {
+        "id" : "order_id",
+        "common" : "name"
+    },
+
+    "aggregator" : {
+        "id" : "order_id",
+        "list" : "drinks",
+        "items" : "drink"
+    }
 }
