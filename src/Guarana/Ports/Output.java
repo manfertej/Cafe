@@ -9,14 +9,15 @@ import org.w3c.dom.Document;
  * Simplemente muestra los XML del slot.
  * @author alfonso
  */
-public class Output {
+public class Output extends Port{
     
     private Slot input;
     
     
-    
+    @Override
     public void setInput(Slot s) { this.input = s; }
-    
+    @Override
+    public void setOutput(Slot s) {}
     
     public void run() {
         
@@ -27,4 +28,6 @@ public class Output {
             System.out.println(Toolbox.toString(doc));
         }
     }
+
+    
 }

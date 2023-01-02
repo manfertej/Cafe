@@ -39,6 +39,12 @@
 
     "translatorCalientes" : {
         "path" : "traductorCalientes.xsl"
+    },
+
+    "enricher" : {
+        "what" : "avalible",
+        "where" : "drink"
     }
+    
 
 }

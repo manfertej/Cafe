@@ -46,10 +46,7 @@ public class Translator extends Task{
 
     
     
-    
-    @Override
-    public void run() throws Exception {
-
+    public void translate() throws Exception{
         Document doc = this.input.read();
         
         //Por algun motivo, si no lo hago asi da un error.
@@ -73,12 +70,20 @@ public class Translator extends Task{
 
         Document resultDoc = (Document) result.getNode();
         
-        System.out.println(Toolbox.toString(resultDoc));
-        //this.output.write(resultDoc);
+        //System.out.println(Toolbox.toString(resultDoc));
+        this.output.write(resultDoc);
+    }
+    
+    
+    
+    @Override
+    public void run() throws Exception {
+
+        while(!this.input.empty()) this.translate();
     }
 
     
-/*    
+    /*
     public static void main(String[] args) throws Exception {
         
         JSONObject json = Toolbox.jsonFromFile("config.json");
@@ -91,11 +96,6 @@ public class Translator extends Task{
         s.write(doc);
         splitter.run();
     }
-  */  
-    
-    
-    
-    
-    
+    */
     
 }

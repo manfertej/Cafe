@@ -102,7 +102,7 @@ public class Splitter extends Task{
             Node itemAux = docAux.importNode(nAux, true);
             docAux.getDocumentElement().appendChild(itemAux);
             
-            System.out.println(Toolbox.toString(docAux));
+            
             this.output.write(docAux);
         }
         

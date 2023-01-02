@@ -114,8 +114,8 @@ public class Aggregator extends Task {
             
             
             //System.out.println(Toolbox.toString(id));
-            //this.output.write(combined);
-            System.out.println(Toolbox.toString(combined));
+            //System.out.println(Toolbox.toString(combined));
+            this.output.write(combined);
             array.clear();
         }
     }

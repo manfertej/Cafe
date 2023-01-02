@@ -7,7 +7,7 @@
     <sql>
         SELECT count(1)
         FROM bebidas_frias
-        WHERE bebidas_frias.nombre = <xsl:value-of select="//name"/>;
+        WHERE bebidas_frias.nombre = '<xsl:value-of select="//name"/>';
     </sql>
 </cafe_order>
 </xsl:template>

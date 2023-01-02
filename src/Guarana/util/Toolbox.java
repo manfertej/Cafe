@@ -4,6 +4,7 @@ package Guarana.util;
 
 import Guarana.Ports.Input;
 import Guarana.Ports.Output;
+import Guarana.Ports.Port;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
@@ -16,7 +17,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.Transformer;
@@ -46,27 +46,26 @@ public class Toolbox {
     public static void connect(Task t1, Task t2) {
         
         Slot sAux = new Slot();
-        t1.setInput(sAux);
-        t2.setOutput(sAux);
+        t1.setOutput(sAux);
+        t2.setInput(sAux);
     }
 
     
-    
-    
-    public static void connect(Input inp, Task t) {
+    public static void connect(Port port, Task t) {
         
         Slot sAux = new Slot();
-        inp.setInput(sAux);
+        port.setOutput(sAux);
         t.setInput(sAux);
     }
     
     
-    public static void connect(Task t, Output o) {
+    public static void connect(Task t, Port port) {
         
         Slot sAux = new Slot();
         t.setOutput(sAux);
-        o.setInput(sAux);
+        port.setInput(sAux);
     }
+    
     
     
     

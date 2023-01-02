@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<cafe_order>
+    <order_id>1</order_id>
+    <drink>
+
+        <name>cafe</name>
+
+        <type>hot</type>
+
+    </drink>
+    <sql>
+        SELECT count(1)
+        FROM bebidas_calientes
+        WHERE bebidas_calientes.nombre = 'cafe';
+    </sql>
+</cafe_order>

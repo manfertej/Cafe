@@ -12,12 +12,16 @@ import org.w3c.dom.Document;
  * Te elije el fichero que entra al sistema.
  * @author alfonso
  */
-public class Input {
+public class Input extends Port{
     
     Slot input;
     
     
+    @Override
     public void setInput(Slot s) { this.input = s; }
+    @Override
+    public void setOutput(Slot s){}
+    
     
     public void selectFile() {
         
